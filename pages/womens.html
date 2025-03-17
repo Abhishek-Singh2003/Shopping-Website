@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="icon" type="image/x-icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpAFpDAH7ww3SRLvyvFd9YRXwTkdh1EBPMAIgYtxIfgvPy9DKmN0_CKPjoCL_qG8ezJ7o&usqp=CAU">
+    <title>Women's Collection - Curiosity Closet</title>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/style.css" />
+    <!-- Font-Awesome CDN -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    
+    <style>
+      :root {
+        --primary-color: #009688;
+        --secondary-color: #00796b;
+        --text-color: #333;
+        --light-bg: #f5f5f5;
+        --white: #ffffff;
+        --border-color: #ddd;
+        --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .page-banner {
+        position: relative;
+        height: min(50vh, 400px);
+        overflow: hidden;
+      }
+      
+      .page-banner img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      
+      .page-banner-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: white;
+        z-index: 2;
+        width: min(90%, 800px);
+        padding: 1rem;
+      }
+      
+      .page-banner::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+      }
+      
+      .page-banner-content h1 {
+        font-size: clamp(2rem, 5vw, 3rem);
+        margin-bottom: 1rem;
+        animation: fadeIn 1s ease-in-out;
+      }
+      
+      .page-banner-content p {
+        font-size: clamp(1rem, 2vw, 1.2rem);
+        animation: fadeIn 1.5s ease-in-out;
+        max-width: 600px;
+        margin: 0 auto;
+        opacity: 0.9;
+      }
+      
+      .filter-container {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: var(--white);
+        padding: 1rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow);
+      }
+      
+      .filter-wrapper {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      
+      .filter-options {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      
+      .filter-options select,
+      .sort-options select {
+        padding: 0.5rem 1rem;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        background-color: var(--white);
+        cursor: pointer;
+        font-size: 0.9rem;
+        min-width: 150px;
+      }
+      
+      .sort-options {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      
+      .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+      
+      .product-card {
+        background: var(--white);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        transition: transform 0.3s ease;
+      }
+      
+      .product-card:hover {
+        transform: translateY(-5px);
+      }
+      
+      @media (max-width: 768px) {
+        .filter-wrapper {
+          flex-direction: column;
+          align-items: stretch;
+        }
+        
+        .filter-options {
+          flex-direction: column;
+        }
+        
+        .sort-options {
+          width: 100%;
+        }
+        
+        .sort-options select {
+          width: 100%;
+        }
+        
+        .products-grid {
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 1rem;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .page-banner {
+          height: 40vh;
+        }
+        
+        .products-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      
+      .notification {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: var(--primary-color);
+        color: var(--white);
+        padding: 1rem;
+        border-radius: 5px;
+        box-shadow: var(--shadow);
+        transform: translateY(100px);
+        opacity: 0;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        z-index: 1000;
+      }
+      
+      .notification.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      
+      .nav-links li a.active {
+        color: var(--primary-color);
+      }
+      
+      .nav-links li a.active::after {
+        width: 100%;
+      }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      /* Responsive Design */
+      /* Large Devices (Desktop) */
+      @media screen and (min-width: 1200px) {
+        .page-banner {
+          height: 400px;
+        }
+        
+        .filter-wrapper {
+          max-width: 1200px;
+        }
+        
+        .products-grid {
+          grid-template-columns: repeat(4, 1fr);
+          gap: 2rem;
+        }
+        
+        .product-card {
+          min-height: 400px;
+        }
+        
+        .product-image {
+          height: 300px;
+        }
+      }
+      
+      /* Medium Devices (Tablets) */
+      @media screen and (max-width: 991px) {
+        .page-banner {
+          height: 350px;
+        }
+        
+        .page-banner h1 {
+          font-size: 2.5rem;
+        }
+        
+        .page-banner p {
+          font-size: 1.1rem;
+        }
+        
+        .filter-wrapper {
+          max-width: 900px;
+        }
+        
+        .products-grid {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1.5rem;
+        }
+        
+        .product-card {
+          min-height: 350px;
+        }
+        
+        .product-image {
+          height: 250px;
+        }
+      }
+      
+      /* Small Devices (Mobile) */
+      @media screen and (max-width: 768px) {
+        .page-banner {
+          height: 300px;
+        }
+        
+        .page-banner h1 {
+          font-size: 2rem;
+        }
+        
+        .page-banner p {
+          font-size: 1rem;
+        }
+        
+        .filter-container {
+          padding: 0.8rem;
+        }
+        
+        .filter-wrapper {
+          flex-direction: column;
+          gap: 0.8rem;
+        }
+        
+        .filter-options {
+          flex-direction: column;
+          width: 100%;
+        }
+        
+        .filter-options select,
+        .sort-options select {
+          width: 100%;
+          min-width: 100%;
+        }
+        
+        .sort-options {
+          width: 100%;
+        }
+        
+        .products-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1rem;
+        }
+        
+        .product-card {
+          min-height: 300px;
+        }
+        
+        .product-image {
+          height: 200px;
+        }
+        
+        .product-details {
+          padding: 0.8rem;
+        }
+        
+        .product-title {
+          font-size: 1rem;
+        }
+        
+        .product-price {
+          font-size: 0.9rem;
+        }
+        
+        .add-to-cart {
+          padding: 0.6rem;
+          font-size: 0.9rem;
+        }
+      }
+      
+      /* Extra Small Devices (Small Mobile) */
+      @media screen and (max-width: 576px) {
+        .page-banner {
+          height: 250px;
+        }
+        
+        .page-banner h1 {
+          font-size: 1.8rem;
+        }
+        
+        .page-banner p {
+          font-size: 0.9rem;
+        }
+        
+        .filter-container {
+          padding: 0.6rem;
+        }
+        
+        .filter-options select,
+        .sort-options select {
+          padding: 0.4rem 0.8rem;
+          font-size: 0.85rem;
+        }
+        
+        .products-grid {
+          grid-template-columns: 1fr;
+          gap: 1.2rem;
+        }
+        
+        .product-card {
+          min-height: 350px;
+        }
+        
+        .product-image {
+          height: 250px;
+        }
+        
+        .product-details {
+          padding: 0.7rem;
+        }
+        
+        .product-title {
+          font-size: 0.95rem;
+        }
+        
+        .product-price {
+          font-size: 0.85rem;
+        }
+        
+        .add-to-cart {
+          padding: 0.5rem;
+          font-size: 0.85rem;
+        }
+        
+        .notification {
+          left: 20px;
+          right: 20px;
+          bottom: 10px;
+          text-align: center;
+        }
+      }
+      
+      /* Landscape Mode */
+      @media screen and (max-height: 500px) and (orientation: landscape) {
+        .page-banner {
+          height: 200px;
+        }
+        
+        .page-banner h1 {
+          font-size: 1.5rem;
+        }
+        
+        .page-banner p {
+          font-size: 0.8rem;
+        }
+        
+        .filter-container {
+          position: relative;
+        }
+        
+        .products-grid {
+          gap: 0.8rem;
+        }
+      }
+      
+      /* High DPI Screens */
+      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+        .product-image img {
+          image-rendering: -webkit-optimize-contrast;
+        }
+      }
+      
+      /* Print Styles */
+      @media print {
+        .page-banner {
+          height: auto;
+          position: relative;
+        }
+        
+        .page-banner::before {
+          display: none;
+        }
+        
+        .page-banner-content {
+          position: relative;
+          color: var(--text-color);
+        }
+        
+        .filter-container {
+          display: none;
+        }
+        
+        .products-grid {
+          display: block;
+        }
+        
+        .product-card {
+          break-inside: avoid;
+          box-shadow: none;
+          border: 1px solid #ddd;
+        }
+        
+        .add-to-cart {
+          display: none;
+        }
+        
+        .notification {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- TopBar Start -->
+    <div id="top-bar">
+      <!-- Logo -->
+      <div class="logo">
+        <a href='../index.html'><h4><span>CURIOSITY</span> CLOSET</h4></a>
+      </div>
+      <!-- Menu Items -->
+      <ul class="nav-links">
+        <li><a href='../index.html'>Home</a></li>
+        <li><a href='mens.html'>Men's</a></li>
+        <li><a href='womens.html' class="active">Women's</a></li>
+        <li><a href='childrens.html'>Children's</a></li>
+        <li><a href='../index.html#accessories'>Accessories</a></li>
+      </ul>
+      <!-- Icons -->
+      <div class="icons">
+        <i class="fa fa-search"></i>
+        <div class="cart" id="cartIcon">
+          <a href='cart.html'>
+            <i class="fa fa-shopping-cart">
+              <span id="cart-count">0</span>
+            </i>
+          </a>
+        </div>
+        <i class="fa fa-user-circle-o"></i>
+        <div class="burger">
+          <div class="line1"></div>
+          <div class="line2"></div>
+          <div class="line3"></div>
+        </div>
+      </div>
+    </div>
+    <!-- TopBar End -->
+
+    <!-- Page Banner -->
+    <div class="page-banner">
+      <img src="https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Women's Collection">
+      <div class="page-banner-content">
+        <h1>Women's Collection</h1>
+        <p>Explore our elegant selection of women's clothing and accessories designed for the modern woman.</p>
+      </div>
+    </div>
+    
+    <!-- Filter Section -->
+    <div class="filter-container">
+      <div class="filter-options">
+        <select id="category-filter">
+          <option value="all">All Categories</option>
+          <option value="dresses">Dresses</option>
+          <option value="tops">Tops</option>
+          <option value="pants">Pants</option>
+          <option value="accessories">Accessories</option>
+        </select>
+        
+        <select id="price-filter">
+          <option value="all">All Prices</option>
+          <option value="0-25">$0 - $25</option>
+          <option value="25-50">$25 - $50</option>
+          <option value="50-100">$50 - $100</option>
+          <option value="100+">$100+</option>
+        </select>
+      </div>
+      
+      <div class="sort-options">
+        <label for="sort-by">Sort By:</label>
+        <select id="sort-by">
+          <option value="popularity">Popularity</option>
+          <option value="price-low">Price: Low to High</option>
+          <option value="price-high">Price: High to Low</option>
+          <option value="newest">Newest First</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Products Section -->
+    <section>
+      <div class="card-container" id="womensProducts"></div>
+    </section>
+
+    <!-- FOOTER SECTION START -->
+    <footer>
+      <ul class="online-store">
+        <li><h3>Online Store</h3></li>
+        <li><a href="mens.html">Men's Clothing</a></li>
+        <li><a href="womens.html">Women's Clothing</a></li>
+        <li><a href="childrens.html">Children's Clothing</a></li>
+        <li><a href="../index.html#accessories">Accessories</a></li>
+      </ul>
+      <ul class="helpful-links">
+        <li><h3>Helpful Links</h3></li>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <ul class="patners">
+        <li><h3>Partners</h3></li>
+        <li><a href="#">Zara</a></li>
+        <li><a href="#">Pantaloons</a></li>
+        <li><a href="#">Levis</a></li>
+        <li><a href="#">Ucb</a></li>
+        <li><a href="#">+ Many More</a></li>
+      </ul>
+      <ul class="address">
+        <li><h3>Address</h3></li>
+        <li>Building 101</li>
+        <li>Central Avenue</li>
+        <li>486001</li>
+        <li>Rewa (M.P)</li>
+      </ul>
+    </footer>
+    <!-- FOOTER SECTION END  -->
+
+    <!-- Notification Container -->
+    <style>
+      .notification {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #009688;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 5px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        transform: translateY(100px);
+        opacity: 0;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        z-index: 1000;
+      }
+      
+      .notification.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      
+      .cart-animation {
+        animation: bounce 0.5s ease;
+      }
+      
+      @keyframes bounce {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+      }
+    </style>
+
+    <!-- JavaScript -->
+    <script src="../js/script.js"></script>
+    <script src="../js/login-handler.js"></script>
+    <script src="../js/search.js"></script>
+  </body>
+</html> 

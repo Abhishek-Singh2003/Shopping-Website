@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="theme-color" content="#009688" />
+    <meta name="description" content="Curiosity Closet - Discover Your Style - Fashion Store" />
+    <link rel="icon" type="image/x-icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpAFpDAH7ww3SRLvyvFd9YRXwTkdh1EBPMAIgYtxIfgvPy9DKmN0_CKPjoCL_qG8ezJ7o&usqp=CAU">
+    <title>Curiosity Closet - Discover Your Style</title>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./css/style.css" />
+    <!-- Font-Awesome CDN -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    
+    <style>
+      :root {
+        --primary-color: #009688;
+        --secondary-color: #00796b;
+        --text-color: #333;
+        --text-light: #666;
+        --light-bg: #f5f5f5;
+        --white: #ffffff;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Poppins', sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        overflow-x: hidden;
+      }
+
+      .hero-section {
+        position: relative;
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        padding: 2rem 0;
+        overflow: hidden;
+      }
+      
+      .hero-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('https://images.pexels.com/photos/934070/pexels-photo-934070.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center;
+        background-size: cover;
+        z-index: -1;
+        filter: brightness(0.7);
+      }
+      
+      .hero-content {
+        max-width: min(90%, 800px);
+        margin: 0 auto;
+        text-align: center;
+        color: white;
+        padding: 1rem;
+      }
+      
+      .hero-content h1 {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        margin-bottom: 1rem;
+        line-height: 1.2;
+      }
+      
+      .hero-content p {
+        font-size: clamp(1rem, 2vw, 1.2rem);
+        margin-bottom: 2rem;
+        opacity: 0.9;
+      }
+      
+      .hero-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      
+      .btn {
+        padding: 0.8rem 2rem;
+        border-radius: 30px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        font-size: clamp(0.875rem, 1.5vw, 1rem);
+      }
+      
+      .btn-primary {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+      }
+      
+      .btn-secondary {
+        background-color: transparent;
+        color: white;
+        border: 2px solid white;
+      }
+      
+      .section {
+        padding: 4rem 1rem;
+      }
+      
+      .section-title {
+        font-size: clamp(1.5rem, 3vw, 2.5rem);
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+      
+      .section-subtitle {
+        font-size: clamp(0.875rem, 1.5vw, 1.1rem);
+        text-align: center;
+        color: #666;
+        max-width: 700px;
+        margin: 0 auto 3rem;
+      }
+      
+      .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+      
+      .product-card {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+      
+      .product-card:hover {
+        transform: translateY(-5px);
+      }
+      
+      .product-image {
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+      }
+      
+      .product-info {
+        padding: 1rem;
+      }
+      
+      .product-title {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+      }
+      
+      .product-price {
+        color: var(--primary-color);
+        font-weight: 600;
+      }
+      
+      .features {
+        background-color: var(--light-bg);
+        text-align: center;
+      }
+      
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+      
+      .feature-card {
+        padding: 1.5rem;
+      }
+      
+      .feature-icon {
+        font-size: 2rem;
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+      }
+      
+      .newsletter {
+        background-color: var(--primary-color);
+        color: white;
+        text-align: center;
+      }
+      
+      .newsletter-form {
+        display: flex;
+        max-width: min(90%, 500px);
+        margin: 2rem auto 0;
+        gap: 0.5rem;
+      }
+      
+      .newsletter-input {
+        flex: 1;
+        padding: 0.8rem 1rem;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        min-width: 0;
+      }
+      
+      .newsletter-btn {
+        padding: 0.8rem 1.5rem;
+        background-color: var(--text-color);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        white-space: nowrap;
+      }
+      
+      @media (max-width: 768px) {
+        .hero-buttons {
+          flex-direction: column;
+          width: 100%;
+          max-width: 300px;
+          margin: 0 auto;
+        }
+        
+        .btn {
+          width: 100%;
+        }
+        
+        .newsletter-form {
+          flex-direction: column;
+        }
+        
+        .newsletter-btn {
+          width: 100%;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .section {
+          padding: 2rem 1rem;
+        }
+        
+        .products-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Testimonials Section Styles */
+      .testimonials {
+        background-color: var(--light-bg);
+        padding: 4rem 1rem;
+      }
+
+      .testimonial-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      .testimonial-card {
+        background: var(--white);
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+
+      .testimonial-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .testimonial-text {
+        font-size: clamp(0.9rem, 1.5vw, 1rem);
+        color: var(--text-color);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        font-style: italic;
+      }
+
+      .testimonial-author {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .author-img {
+        width: 101px;
+        height: 105px;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+
+      .author-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .author-info h4 {
+        font-size: 1.1rem;
+        color: var(--text-color);
+        margin-bottom: 0.2rem;
+      }
+
+      .author-info p {
+        font-size: 0.9rem;
+        color: var(--text-light);
+      }
+
+      @media (max-width: 992px) {
+        .testimonial-container {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .testimonial-container {
+          grid-template-columns: 1fr;
+          max-width: 600px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- TopBar Start -->
+    <div id="top-bar">
+      <!-- Logo -->
+      <div class="logo">
+        <a href='index.html'><h4><span>CURIOSITY</span> CLOSET</h4></a>
+      </div>
+      <!-- Menu Items -->
+      <ul class="nav-links">
+        <li><a href='index.html'>Home</a></li>
+        <li><a href='pages/mens.html'>Men's</a></li>
+        <li><a href='pages/womens.html'>Women's</a></li>
+        <li><a href='pages/childrens.html'>Children's</a></li>
+        <li><a href="#accessories">Accessories</a></li>
+      </ul>
+      <!-- Icons -->
+      <div class="icons">
+        <i class="fa fa-search"></i>
+        <div class="cart" id="cartIcon">
+          <a href='pages/cart.html'>
+            <i class="fa fa-shopping-cart">
+              <span id="cart-count">0</span>
+            </i>
+          </a>
+        </div>
+        <i class="fa fa-user-circle-o"></i>
+        <div class="burger">
+          <div class="line1"></div>
+          <div class="line2"></div>
+          <div class="line3"></div>
+        </div>
+      </div>
+    </div>
+    <!-- TopBar End -->
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-bg"></div>
+      <div class="hero-content">
+        <h1>Discover Your Style</h1>
+        <p>Explore our curated collection of fashion-forward clothing and accessories.</p>
+        <div class="hero-buttons">
+          <a href="#new-arrivals" class="btn btn-primary">Shop New Arrivals</a>
+          <a href="#collections" class="btn btn-secondary">View Collections</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURE SECTION -->
+    <section id="features" data-aos="fade-up" data-aos-duration="1000">
+      <!-- Icon Container -->
+      <div class="icon-container">
+        <!-- Image Wrapper -->
+        <div class="img-wrapper">
+          <!-- Image -->
+          <img src="https://cdn-icons-png.flaticon.com/512/2037/2037457.png" alt="Free Delivery" />
+        </div>
+        <!-- Icon Text  -->
+        <h4>Free Delivery</h4>
+      </div>
+      <!-- Icon Container -->
+      <div class="icon-container">
+        <!-- Image Wrapper -->
+        <div class="img-wrapper">
+          <!-- Image -->
+          <img src="https://cdn-icons-png.flaticon.com/512/1611/1611179.png" alt="Money Back Guarantee" />
+        </div>
+        <!-- Icon Text  -->
+        <h4>Money Back Guarantee</h4>
+      </div>
+      <!-- Icon Container -->
+      <div class="icon-container">
+        <!-- Image Wrapper -->
+        <div class="img-wrapper">
+          <!-- Image -->
+          <img src="https://cdn-icons-png.flaticon.com/512/4185/4185148.png" alt="Always Support" />
+        </div>
+        <!-- Icon Text  -->
+        <h4>Always Support</h4>
+      </div>
+      <!-- Icon Container -->
+      <div class="icon-container">
+        <!-- Image Wrapper -->
+        <div class="img-wrapper">
+          <!-- Image -->
+          <img src="https://cdn-icons-png.flaticon.com/512/2527/2527857.png" alt="Secure Payment" />
+        </div>
+        <!-- Icon Text  -->
+        <h4>Secure Payment</h4>
+      </div>
+    </section>
+    <!-- FEATURE SECTION END -->
+
+    <!-- Trending Section -->
+    <section class="trending-section">
+      <h2 class="section-title" data-aos="fade-up">Trending This Season</h2>
+      <p class="section-subtitle" data-aos="fade-up" data-aos-delay="200">Discover our most popular items that are flying off the shelves. Stay ahead of the fashion curve with these must-have pieces.</p>
+      
+      <!-- Slider for trending products will be added dynamically -->
+      <div id="trendingProducts" data-aos="fade-up" data-aos-delay="400"></div>
+    </section>
+
+    <!-- COLLECTION SHOWCASE -->
+    <section id="collection-showcase" class="collection-showcase">
+      <div class="collection-item slide-in-left" data-aos="fade-right">
+        <img src="https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Men's Collection">
+        <div class="collection-overlay">
+          <h3>Men's Collection</h3>
+          <p>Discover the latest trends in men's fashion</p>
+          <a href="pages/mens.html" class="shop-now-btn">Shop Now</a>
+        </div>
+      </div>
+      
+      <div class="collection-item fade-in" data-aos="fade-up">
+        <img src="https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Women's Collection">
+        <div class="collection-overlay">
+          <h3>Women's Collection</h3>
+          <p>Explore our stylish women's fashion</p>
+          <a href="pages/womens.html" class="shop-now-btn">Shop Now</a>
+        </div>
+      </div>
+      
+      <div class="collection-item slide-in-right" data-aos="fade-left">
+        <img src="https://images.pexels.com/photos/5905445/pexels-photo-5905445.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Children's Collection">
+        <div class="collection-overlay">
+          <h3>Children's Collection</h3>
+          <p>Adorable styles for your little ones</p>
+          <a href="pages/childrens.html" class="shop-now-btn">Shop Now</a>
+        </div>
+      </div>
+    </section>
+    <!-- COLLECTION SHOWCASE END -->
+
+    <!-- CLOTHING SECTION -->
+    <section id="clothing">
+      <!-- Section Heading -->
+      <h2 class="section-heading" data-aos="fade-up">Clothing for Men and Women</h2>
+      <!-- Cards Container -->
+      <div class="card-container" id="clothingCards"></div>
+    </section>
+    <!-- CLOTHING SECTION END -->
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+      <h2 class="section-title" data-aos="fade-up">What Our Customers Say</h2>
+      <p class="section-subtitle" data-aos="fade-up" data-aos-delay="200">Don't just take our word for it. Here's what our happy customers have to say about their shopping experience.</p>
+      
+      <div class="testimonial-container">
+        <div class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
+          <p class="testimonial-text">"I absolutely love the quality of clothes from Curiosity Closet. The attention to detail and the unique designs make them stand out from other brands."</p>
+          <div class="testimonial-author">
+            <div class="author-img">
+              <img src="https://res.cloudinary.com/dixdiy3uj/image/upload/v1742212717/WhatsApp_Image_2025-03-17_at_17.26.58_ce823a4e_oep53s.jpg" alt="Tripti">
+            </div>
+            <div class="author-info">
+              <h4>Tripti</h4>
+              <p>Fashion Blogger</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="testimonial-card" data-aos="fade-up" data-aos-delay="500">
+          <p class="testimonial-text">"The customer service is exceptional! I had an issue with my order and they resolved it immediately. Will definitely shop here again."</p>
+          <div class="testimonial-author">
+            <div class="author-img">
+              <img src="https://res.cloudinary.com/dixdiy3uj/image/upload/v1742212546/WhatsApp_Image_2025-03-17_at_17.20.09_d2def6e5_bmo0dq.jpg" alt="Michael Chen">
+            </div>
+            <div class="author-info">
+              <h4>Ashish</h4>
+              <p>Loyal Customer</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="testimonial-card" data-aos="fade-up" data-aos-delay="700">
+          <p class="testimonial-text">"I bought a dress for a special occasion and received so many compliments! The fit was perfect and the material was high quality."</p>
+          <div class="testimonial-author">
+            <div class="author-img">
+              <img src="https://res.cloudinary.com/dixdiy3uj/image/upload/v1742211930/WhatsApp_Image_2025-03-17_at_17.11.31_b3d48414_ywxxpc.jpg" alt="Emma Rodriguez">
+            </div>
+            <div class="author-info">
+              <h4>Sachin</h4>
+              <p>Event Planner</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACCESSORIES SECTION -->
+    <section id="accessories">
+      <!-- Section Heading -->
+      <h2 class="section-heading" data-aos="fade-up">Accessories for Men and Women</h2>
+      <!-- Cards Container -->
+      <div class="card-container" id="accessoriesCards"></div>
+    </section>
+    <!-- ACCESSORIES SECTION END -->
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+      <h2 class="section-title" data-aos="fade-up">Join Our Newsletter</h2>
+      <p class="section-subtitle" data-aos="fade-up" data-aos-delay="200">Subscribe to receive updates on new arrivals, special offers, and exclusive discounts.</p>
+      
+      <form class="newsletter-form" data-aos="fade-up" data-aos-delay="400">
+        <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+        <button type="submit" class="newsletter-btn">Subscribe</button>
+      </form>
+    </section>
+
+    <!-- FOOTER SECTION START -->
+    <footer>
+      <ul class="online-store">
+        <li><h3>Online Store</h3></li>
+        <li><a href="pages/mens.html">Men's Clothing</a></li>
+        <li><a href="pages/womens.html">Women's Clothing</a></li>
+        <li><a href="pages/childrens.html">Children's Clothing</a></li>
+        <li><a href="#accessories">Accessories</a></li>
+      </ul>
+      <ul class="helpful-links">
+        <li><h3>Helpful Links</h3></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <ul class="patners">
+        <li><h3>Partners</h3></li>
+        <li><a href="#">Zara</a></li>
+        <li><a href="#">Pantaloons</a></li>
+        <li><a href="#">Levis</a></li>
+        <li><a href="#">Ucb</a></li>
+        <li><a href="#">+ Many More</a></li>
+      </ul>
+      <ul class="address">
+        <li><h3>Address</h3></li>
+        <li>Building 101</li>
+        <li>Central Avenue</li>
+        <li>486001</li>
+        <li>Rewa (M.P)</li>
+      </ul>
+    </footer>
+    <!-- FOOTER SECTION END  -->
+
+    <!-- Notification Container -->
+    <style>
+      .notification {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #009688;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 5px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        transform: translateY(100px);
+        opacity: 0;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        z-index: 1000;
+      }
+      
+      .notification.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      
+      .cart-animation {
+        animation: bounce 0.5s ease;
+      }
+      
+      @keyframes bounce {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+      }
+    </style>
+
+    <!-- JavaScript -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      // Initialize AOS animation library
+      AOS.init();
+    </script>
+    <script src="./js/script.js"></script>
+    <script src="./js/login-handler.js"></script>
+    <script src="./js/search.js"></script>
+    <script>
+      // Function to display trending products
+      function displayTrendingProducts() {
+        const trendingContainer = document.getElementById('trendingProducts');
+        if (!trendingContainer) return;
+        
+        // Create a container for the trending products
+        const productsRow = document.createElement('div');
+        productsRow.className = 'trending-products-row';
+        productsRow.style.display = 'flex';
+        productsRow.style.justifyContent = 'center';
+        productsRow.style.gap = '30px';
+        productsRow.style.flexWrap = 'wrap';
+        
+        // Sample trending products data
+        const trendingProducts = [
+          {
+            id: 't1',
+            name: 'Premium Cotton T-Shirt',
+            price: 29.99,
+            image: 'https://images.pexels.com/photos/1656684/pexels-photo-1656684.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+          },
+          {
+            id: 't2',
+            name: 'Designer Denim Jacket',
+            price: 89.99,
+            image: 'https://images.pexels.com/photos/1124468/pexels-photo-1124468.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+          },
+          {
+            id: 't3',
+            name: 'Elegant Summer Dress',
+            price: 59.99,
+            image: 'https://images.pexels.com/photos/972995/pexels-photo-972995.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+          },
+          {
+            id: 't4',
+            name: 'Classic Leather Watch',
+            price: 119.99,
+            image: 'https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+          }
+        ];
+        
+        // Create and append product cards
+        trendingProducts.forEach(product => {
+          const productCard = document.createElement('div');
+          productCard.className = 'card';
+          productCard.dataset.id = product.id;
+          productCard.style.maxWidth = '280px';
+          
+          productCard.innerHTML = `
+            <div class="card-img">
+              <img src="${product.image}" alt="${product.name}">
+            </div>
+            <div class="card-details">
+              <h3>${product.name}</h3>
+              <div class="card-footer">
+                <span class="price">$${product.price}</span>
+                <button class="add-to-cart">Add to Cart</button>
+              </div>
+            </div>
+          `;
+          
+          productsRow.appendChild(productCard);
+        });
+        
+        trendingContainer.appendChild(productsRow);
+      }
+      
+      // Call the function when the DOM is loaded
+      document.addEventListener('DOMContentLoaded', function() {
+        displayTrendingProducts();
+      });
+    </script>
+  </body>
+</html>
